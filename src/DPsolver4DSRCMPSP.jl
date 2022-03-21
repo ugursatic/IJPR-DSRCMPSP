@@ -85,7 +85,7 @@ using Distributions #for exponential distribution
         HoldValue = ZerosFloat64()  #prevents from overwriting durung the state value calculation
         ArrivalProbabilty=0.60#New project arrival probability
         ArrivalProb = [ArrivalProbabilty,ArrivalProbabilty,ArrivalProbabilty,ArrivalProbabilty,ArrivalProbabilty]#arrival prob for diffirent projects
-        #policy = ZerosINT32() #int 32 only supports 5 project 2 task or 3 project and 3 task
+        policy = ZerosINT32() #int 32 only supports 5 project 2 task or 3 project and 3 task
         #policy = load("policy.jld2")["policy"]
         discount=1 #discount factor
         MaxW=999999#maximum value increases by iteration
