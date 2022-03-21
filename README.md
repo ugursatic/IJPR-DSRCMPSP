@@ -12,7 +12,7 @@ This code is my first Julia code. Thus the code might be written poorly and migh
  The code writes differences between maximum and minimum value increases of each iteration till the difference is smaller than the stopping criteria to the REPL console. The code also writes the running time to the REPL console when it completes. 
  
 [Diffirences between maximum and minimum value increases] = [Maximum value increase]-[Minimum value increase]. 
-In our paper, we used the average of final [Maximum value increase] and [Minimum value increase] as the long-term average prot per unit time.  
+In our paper, we used the average of final [Maximum value increase] and [Minimum value increase] as the long-term average profit per unit time.  
  
 
 
