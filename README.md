@@ -105,6 +105,8 @@ Line 1387 #Best_action= Static_Best_Action_Founder(timee,RA,State_space)
 
 3) remove the "#" sign in front of the lines 89, 104,  (if there are any), and put "#" signs to 88,101,102 and 103 (if there is not). Also, change each DeltaFounder to DeltaFounder2 in the cases() function that starts at line 1324. Then run the code as defined in section 1 Running the Code. This will calculate the long-term average profit of the stored policy. 
 
+Note : the stored GA policies which used in our paper are available in Genetic algorithm policies folder. 
+
 # 6.4) Optimal reactive baseline algorithm (ORBA) : 
 Although ORBA may work only doing step one, it is not time efficient. ORBA takes much time to generate the (static) optimal policy of a state. Since this policy will not change with iterations, we could run ORBA once then store its policy. Then we could use this stored policy for evaluation.
 
