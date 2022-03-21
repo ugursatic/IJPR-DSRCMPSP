@@ -1384,6 +1384,7 @@ sum(1+1)
             #Best_action= Notgreed_policy(timee,RA,State_space)
             #Best_action= GeneticAlgorihm(timee,RA,State_space)
             #Best_action= PriortyRule(timee,RA,State_space)
+            #Best_action= Static_Best_Action_Founder(timee,RA,State_space)
             BA=ActionConventor(Best_action)#save the action [0 1,0 0,0 0,1 0] as 1000010 #no overide problem
             policy[p1,p1t,p2,p2t,p3,p3t,p4,p4t,p5,p5t]=BA#saving the best action for that state
             HoldValue[p1,p1t,p2,p2t,p3,p3t,p4,p4t,p5,p5t]=Bellman(timee,State_space,Best_action)#calculete the V_new (V_t)
@@ -2025,3 +2026,108 @@ sum(1+1)
     end # creates policy with RBA
     ########################
     #Probscases()
+
+function Static_Best_Action_Founder(T,RR,State_space)
+        #Generate all alternative task orders
+        #Eleminate unfeasibles (project network)
+        #find best
+        ##RR avaialble resource
+        ##T due date space
+        #give a number to all task
+        #State_space = [-1 -1; 0 -1]#[-1 -1 -1; -1 -1 -1; -1 -1 -1] #Test values
+        #T=[1,2,1,1,1] #Test values
+        #RR=3 #Test values
+        Project_holder = []
+        Task_holder = []
+        task_number = 0
+        Project_number = 0
+        Task_state = zeros(Int8,length(State_space))
+        for a = 1 : size(State_space,1)
+            #global Project_number
+            #global task_number
+            Project_number += 1
+            for b = 1 : size(State_space,2)
+                task_number += 1
+                Task_state[task_number] = State_space[a,b]
+                if State_space[a,b] == -1
+                    push!(Project_holder,Project_number)
+                    push!(Task_holder,task_number)
+                end
+            end
+        end#this generates scheduling orders for waiting tasks
+
+        AllSchedules = []
+        for N in collect(permutations(Task_holder))
+            #println(N)
+            Eleminate = 0
+            for n in N
+                if mod(n, size(State_space,2)) != 1
+                    if Task_state[n-1] == -1
+                        if findall(x->x==n-1 , N) > findall(x->x==n , N)
+                            #println(N) #Eleminateds
+                            Eleminate = 1
+                        end
+                    end
+                end
+            end
+            if Eleminate != 1 #task order based clearing
+                push!(AllSchedules,N)
+            end
+        end
+        ###Hurray I found all feasible schedules.
+
+        ###Found reward and completion time of schedules
+        counter2 = 0
+        Priorty_space = zeros(Int64, size(AllSchedules,1),size(State_space,1),size(State_space,2))
+        Schedile_scores = zeros(Float64,size(AllSchedules,1))
+        Schedile_rewards = zeros(Float64,size(AllSchedules,1))
+        for N in AllSchedules
+            counter = size(N,1)
+            #global counter2
+            counter2 += 1
+            for n in N
+                #div(n, size(State_space,2))+mod(n, size(State_space,2)) this gives project no
+                #2-mod(n, size(State_space,2)) this gives task no
+
+                #########THIS CODE WILL NOT WORK EXCEPT FOR 2 project and 2 task problem fix this to solve others.
+                t_n = mod(n, size(State_space,2)) #Task no holder
+                if t_n == 0
+                    t_n =size(State_space,2) ## for task no == project no
+                end
+                p_n =0
+                if mod(n, size(State_space,2)) != 0
+                    p_n = 1
+                end
+                Priorty_space[counter2,div(n, size(State_space,2))+p_n,t_n] = counter
+                ##############################################
+                counter -= 1
+            end
+            #println(Priorty_space)
+            Schedile_scores[counter2], Schedile_rewards[counter2] = GAScore(T,Priorty_space[counter2,:,:],RR,State_space)
+        end
+        ###Found reward and completion time of schedules
+
+        #####Find the best schedule, if has same reward check completion time, if have same competion time randomly select one
+        MaxRewards = findall(a->a==maximum(Schedile_rewards),Schedile_rewards)
+        Best_action_no = 0
+        #N=3
+        Shortest_completion = Inf
+        for N in MaxRewards
+            #global Shortest_completion
+            #global Best_action_no
+            #println(Schedile_scores[N] < Shortest_completion)
+            if Schedile_scores[N] < Shortest_completion
+                Shortest_completion =  Schedile_scores[N]
+                Best_action_no = N
+                #println(Best_action_no)
+            elseif Schedile_scores[N] == Shortest_completion
+                #if rand(1:2) == 2
+                    Best_action_no =   N
+                    #println(Best_action_no)
+                #end
+            end
+        end
+        #####Find the best schedule, if has same reward check completion time, if have same competion time randomly select one
+        return best_action = TurnScheduletoAction(Priorty_space[Best_action_no,:,:],RR,State_space) #This is best solution found
+        #println(best_action)
+    end
