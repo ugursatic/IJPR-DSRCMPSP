@@ -1,4 +1,4 @@
-# IJOR-DSRCMPSP
+# IJPR-DSRCMPSP
 The source code (in the src folder) is used for computational analysis in Satic, U., Jacko, P., & Kirkbride, C. (2020). Performance evaluation of scheduling policies for the Dynamic and Stochastic Resource-Constrained Multi-Project Scheduling Problem. International Journal of Production Research. https://doi.org/10.1080/00207543.2020.1857450
 
 This code is my first Julia code. Thus the code might be written poorly and might be hard to work with. Please forgive me for this. Please read the usage notes for instructions about how to use the code. Please contact u.satic@lancaster.ac.uk for your questions and help requests. 
@@ -107,7 +107,7 @@ Line 1387 #Best_action= Static_Best_Action_Founder(timee,RA,State_space)
 
 Note : the stored GA policies which used in our paper are available in Genetic algorithm policies folder. 
 
-# 6.4) Optimal reactive baseline algorithm (ORBA) : 
+# 6.5) Optimal reactive baseline algorithm (ORBA) : 
 Although ORBA may work only doing step one, it is not time efficient. ORBA takes much time to generate the (static) optimal policy of a state. Since this policy will not change with iterations, we could run ORBA once then store its policy. Then we could use this stored policy for evaluation.
 
 To use LOptimal reactive baseline algorihm (ORBA) : 
