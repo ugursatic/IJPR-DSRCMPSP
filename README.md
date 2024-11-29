@@ -224,12 +224,12 @@ Line 1387 Best_action= Static_Best_Action_Founder(timee,RA,State_space)
 #### 7) Resouce availability setting :
 The default resource availability is given as 3 in line 74 (Res1 = 3). To change resource availability just change this value. 
 
-# Support
+## Support
 This code is my first Julia code. Thus the code might be written poorly and might be hard to work with. 
 
 Please contact ugur.satic@agu.edu.tr for your questions and help requests. 
 
-# License
+## License
 This project is licensed under the terms of the [MIT License](LICENSE).
 
 For more information, please see the [LICENSE folder](LICENSE) for detailed licensing documentation.
